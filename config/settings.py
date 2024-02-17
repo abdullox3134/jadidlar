@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'slayder',
     'tadbirlar',
     'tanlovlar',
+    'users'
 ]
 
 REST_FRAMEWORK = {
@@ -247,3 +248,6 @@ JAZZMIN_UI_TWEAKS = {
     },
     "actions_sticky_top": False
 }
+
+
+AUTH_USER_MODEL = 'users.CustomUser'

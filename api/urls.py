@@ -9,7 +9,7 @@ from api.views.hujjatlar import AsarlarListView, asarlardetail, MaqolalarListVie
     tadqiqotlardetail, SherlarListView, sherlardetail, HotiralarListView, hotiralardetail, Arxiv_hujjatlarListView, \
     arxiv_hujjatlardetail, DissertatsiyaListView, dissertatsiyadetail
 from api.views.ishtirokchilar import IshtirokchilarListView, ishtirokchilardetail
-from api.views.jadidlar import JadidlarListView, jadidlardetail
+from api.views.jadidlar import JadidlarListView, jadidlardetail, LikeAPIView
 from api.views.manbalar import AudiolarListView, audiolardetail, VideolarListView, videolardetail, RasmlarListView, \
     rasmlardetail
 from api.views.sahifalar import SahifalarListView, sahifalardetail
@@ -19,14 +19,15 @@ from api.views.tadbirlar import KanferensiyalarListView, kanferensiyalardetail, 
 from api.views.tanlovlar import TanlovlarListView, tanlovlardetail
 from rest_framework_simplejwt import views as jwt_views
 
-
 from django.conf import settings
 from django.conf.urls.static import static
+
+from users.views.auth import RegisterView
 
 urlpatterns = [
     path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-
+    path('register/', RegisterView.as_view(), name='auth_register'),
 
     path('foydali_havolalar/', Foydali_havolalarListView.as_view(), name='foydali_havolalar-list'),
     path('foydali_havolalar/<int:pk>/', foydali_havolalardetail, name='foydali_havolalar-detail'),
@@ -60,6 +61,8 @@ urlpatterns = [
 
     path('jadidlar/', JadidlarListView.as_view(), name='jadidlar-list'),
     path('jadidlar/<int:pk>/', jadidlardetail, name='jadidlar-detail'),
+    path('jadidlar/<int:pk>/like/',LikeAPIView.as_view(),name = 'post_likes'),
+
 
     path('audiolar/', AudiolarListView.as_view(), name='audiolar-list'),
     path('audiolar/<int:pk>/', audiolardetail, name='audiolar-detail'),
@@ -88,9 +91,7 @@ urlpatterns = [
     path('tanlovlar/', TanlovlarListView.as_view(), name='tanlovlar-list'),
     path('tanlovlar/<int:pk>/', tanlovlardetail, name='tanlovlar-detail'),
 
-
     path('search/', full_text_search, name='search'),
-
 
     path('asarlar/downland/<int:pk>/', FileDownAsarView.as_view(), name='asarlar_downland'),
     path('maqolalar/downland/<int:pk>/', FileDownMaqolaView.as_view(), name='maqolalar_downland'),

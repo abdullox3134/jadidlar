@@ -2,8 +2,11 @@ from rest_framework import serializers
 
 from hujjatlar.serializers import AsarlarSerializer, MaqolalarSerializer, TadqiqotlarSerializer, SherlarSerializer, \
     HotiralarSerializer
-from jadidlar.models import Jadid
+from jadidlar.models import Jadid, Like, User  # , PostLikes
 from hikmatli_sozlar.serializers import Hikmatli_sozlarSerializer
+from rest_framework import serializers
+
+# from .models import Product
 
 
 class JadidSerializer(serializers.ModelSerializer):
@@ -77,3 +80,28 @@ class JadidSerializer(serializers.ModelSerializer):
             data['images'] = [{'image': base_url + img.image.url} for img in images]
 
         return data
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Jadid
+        fields = ['id', 'fullname']
+
+
+# class PostlikeSerializer(serializers.Serializer):
+#     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+#     jadid = serializers.PrimaryKeyRelatedField(queryset=Jadid.objects.all())
+#
+#     def create(self, validated_data):
+#         return Like.objects.create(**validated_data)
+#
+#     def update(self, instance, validated_data):
+#         instance.user = validated_data.get('user', instance.user)
+#         instance.jadid = validated_data.get('jadid', instance.jadid)
+#         instance.save()
+#         return instance
+
+
+
+
+
