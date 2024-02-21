@@ -15,7 +15,8 @@ class Jadid(models.Model):
     image = models.ImageField(upload_to='image/jadid')
     order = models.IntegerField(default=1000)
     bio = RichTextField(blank=True, null=True)
-    likes = models.ManyToManyField(User, related_name='liked_jadids', blank=True)
+    # likes = models.ManyToManyField(User, related_name='liked_jadids', blank=True)
+    # blog_views = models.IntegerField(default=0)
 
     def __str__(self):
         return self.fullname
@@ -49,11 +50,11 @@ class JadidImage(models.Model):
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)
 #     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
-class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    jadid = models.ForeignKey(Jadid, on_delete=models.CASCADE)
-
-
-class PostLikes(models.Model):
-    likeusers = models.ManyToManyField(User)
-    likepost = models.ForeignKey(Jadid,on_delete=models.CASCADE,null=True,related_name='likepost')
+# class Like(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     jadid = models.ForeignKey(Jadid, on_delete=models.CASCADE)
+#
+#
+# class PostLikes(models.Model):
+#     likeusers = models.ManyToManyField(User)
+#     likepost = models.ForeignKey(Jadid,on_delete=models.CASCADE,null=True,related_name='likepost')

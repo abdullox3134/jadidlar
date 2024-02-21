@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-h0p&3so%)!_=1n3mi0+a$$!162ru92^xh65l2l4nz^jy^x=&-*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['jadidlar.pythonanywhere.com', '*']
+ALLOWED_HOSTS = ['jadidend.pythonanywhere.com', '*']
 
 # Application definition
 
@@ -64,7 +64,7 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend'),
-    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
 
 }
 
