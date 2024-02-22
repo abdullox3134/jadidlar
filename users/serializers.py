@@ -1,10 +1,8 @@
-from phonenumber_field.serializerfields import PhoneNumberField
-from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
+from django.contrib.auth.password_validation import validate_password
 from rest_framework.validators import UniqueValidator
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
 from users.models import CustomUser
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -27,10 +25,9 @@ class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True,
                                    validators=[UniqueValidator(queryset=CustomUser.objects.all())]
                                    )
-    # phone = PhoneNumberField(required=True)
-    phone = PhoneNumberField(required=True,
-                             validators=[UniqueValidator(queryset=CustomUser.objects.all())]
-                             )
+    phone = serializers.CharField(required=True,
+                                  validators=[UniqueValidator(queryset=CustomUser.objects.all())]
+                                  )
     full_name = serializers.CharField(max_length=100, required=True)
 
     class Meta:
