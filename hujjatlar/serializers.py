@@ -15,13 +15,25 @@ class AsarlarSerializer(serializers.ModelSerializer):
     def get_jadid_fullname(self, obj):
         return obj.jadid.fullname if obj.jadid else None
 
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     files = instance.files.all()
+    #
+    #     if files:
+    #         request = self.context.get('request')
+    #         data['files'] = [{'file': request.build_absolute_uri(img.file.url)} for img in files]
+    #
+    #     return data
     def to_representation(self, instance):
         data = super().to_representation(instance)
         files = instance.files.all()
 
         if files:
             request = self.context.get('request')
-            data['files'] = [{'file': request.build_absolute_uri(img.file.url)} for img in files]
+            if request:
+                data['files'] = [{'file': request.build_absolute_uri(img.file.url)} for img in files]
+            else:
+                data['files'] = [{'file': img.file.url} for img in files]
 
         return data
 
