@@ -78,10 +78,10 @@ class JadidSerializer(serializers.ModelSerializer):
         return data
 
 
-# class LikeSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Jadid
-#         fields = ['id', 'fullname', 'likes', 'blog_views',]
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Jadid
+        fields = ['id', 'fullname', 'likes', 'blog_views',]
 
 
 
