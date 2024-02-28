@@ -41,9 +41,9 @@ class CustomUser(AbstractUser):
     )
     age = models.PositiveIntegerField(_('age'), blank=True, null=True)
     gender = models.CharField(_('gender'), max_length=10, choices=Gender.choices, blank=True, null=True)
-    weight = models.PositiveIntegerField(_('weight'), blank=True, null=True)
-    height = models.PositiveIntegerField(_('height'), blank=True, null=True)
-    bmi = models.FloatField(_('bmi'), blank=True, null=True)
+    # weight = models.PositiveIntegerField(_('weight'), blank=True, null=True)
+    # height = models.PositiveIntegerField(_('height'), blank=True, null=True)
+    # bmi = models.FloatField(_('bmi'), blank=True, null=True)
     image = models.ImageField(upload_to='users/', blank=True, null=True)
 
     USERNAME_FIELD = 'phone'
@@ -56,26 +56,3 @@ class CustomUser(AbstractUser):
         constraints = [
             models.UniqueConstraint(fields=['phone'], name='unique_phone')
         ]
-
-
-
-
-# from django.utils.translation import gettext_lazy as _
-# from django.contrib.auth.models import AbstractUser, Group, Permission#, UserManager
-# from django.db import models
-#
-# # from django.apps import apps
-#
-#
-# class CustomUser(AbstractUser):
-#     email = models.EmailField(_("email address"), unique=True)
-#
-#     groups = models.ManyToManyField(Group, related_name='customuser_groups')
-#     user_permissions = models.ManyToManyField(
-#         Permission,
-#         related_name='customuser_permissions',
-#         blank=True,
-#     )
-#
-#     def __str__(self):
-#         return self.email
