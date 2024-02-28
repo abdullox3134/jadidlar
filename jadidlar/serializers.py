@@ -81,7 +81,7 @@ class JadidSerializer(serializers.ModelSerializer):
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jadid
-        fields = ['id', 'fullname', 'likes', 'blog_views',]
+        fields = ['id', 'likes', 'blog_views',]
 
 
 

@@ -18,12 +18,12 @@ class JadidImageInline(admin.TabularInline):
     extra = 0
 
 
-
 @admin.register(Jadid)
 class JadidAdmin(admin.ModelAdmin):
     inlines = [JadidImageInline]
     list_display = ('fullname', 'display_admin_photo', 'order',)
-    fields = ('fullname_uz', 'fullname_ru', 'fullname_en', 'birthday', 'die_day', 'image', 'bio', 'order',)
+    fields = (
+    'fullname_uz', 'fullname_ru', 'fullname_en', 'birthday', 'die_day', 'image', 'bio_uz', 'bio_ru', 'bio_en', 'order',)
     list_display_links = ('fullname',)
     search_fields = ('fullname',)
     list_filter = ('fullname',)
@@ -32,7 +32,7 @@ class JadidAdmin(admin.ModelAdmin):
     save_as = False
     save_as_continue = True
     save_on_top = False
-    readonly_fields = ('display_admin_photo', 'display_images', )
+    readonly_fields = ('display_admin_photo', 'display_images',)
 
     def display_admin_photo(self, obj):
         return format_html('<img src="{0}" width="100" height="100"  />'.format(obj.image.url))
@@ -42,13 +42,14 @@ class JadidAdmin(admin.ModelAdmin):
 
     def display_images(self, obj):
         images = obj.jadid_images.all()  # Adjust the related name accordingly
-        return format_html(''.join('<img src="{0}" width="100" height="100" style="margin-right: 10px;"  />'.format(img.image.url) for img in images))
+        return format_html(''.join(
+            '<img src="{0}" width="100" height="100" style="margin-right: 10px;"  />'.format(img.image.url) for img in
+            images))
 
     display_images.short_description = 'Rasmlar'
     display_images.allow_tags = True
 
     def logo_image(self, obj):
-
         return format_html('<img src="{0}" width="100" height="100" />'.format(obj.logo_image.url))
 
     logo_image.short_description = 'Rasm'

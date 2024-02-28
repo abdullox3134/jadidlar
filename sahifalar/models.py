@@ -14,7 +14,7 @@ class Sahifalar(models.Model):
     def __str__(self):
         return self.title
 
-    class  Meta:
+    class Meta:
         verbose_name = 'Sahifa'
         verbose_name_plural = 'Sahifalar'
 

@@ -1,5 +1,6 @@
 from django.http import FileResponse
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -9,6 +10,8 @@ from sahifalar.models import Sahifalar
 
 
 class FileDownAsarView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             file_instance = Asarlar.objects.get(id=pk)
@@ -24,6 +27,8 @@ class FileDownAsarView(APIView):
 
 
 class FileDownMaqolaView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             file_instance = Maqolalar.objects.get(id=pk)
@@ -39,6 +44,8 @@ class FileDownMaqolaView(APIView):
 
 
 class FileDownTadqiqotView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             file_instance = Tadqiqotlar.objects.get(id=pk)
@@ -54,6 +61,8 @@ class FileDownTadqiqotView(APIView):
 
 
 class FileDownSherView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             file_instance = Sherlar.objects.get(id=pk)
@@ -69,6 +78,8 @@ class FileDownSherView(APIView):
 
 
 class FileDownHotiraView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             file_instance = Hotiralar.objects.get(id=pk)
@@ -84,6 +95,8 @@ class FileDownHotiraView(APIView):
 
 
 class FileDownArxiv_hujjatView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             file_instance = Arxiv_hujjatlar.objects.get(id=pk)
@@ -99,6 +112,8 @@ class FileDownArxiv_hujjatView(APIView):
 
 
 class FileDownDissertatsiyaView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             file_instance = Dissertatsiya.objects.get(id=pk)
@@ -114,6 +129,8 @@ class FileDownDissertatsiyaView(APIView):
 
 
 class FileDownSahifaView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             file_instance = Sahifalar.objects.get(id=pk)

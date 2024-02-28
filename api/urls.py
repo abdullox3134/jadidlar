@@ -63,7 +63,6 @@ urlpatterns = [
     path('jadidlar/<int:pk>/', jadidlardetail, name='jadidlar-detail'),
     path('jadidlar/<int:pk>/like/', LikeAPIView.as_view(), name='post_likes'),
 
-
     path('audiolar/', AudiolarListView.as_view(), name='audiolar-list'),
     path('audiolar/<int:pk>/', audiolardetail, name='audiolar-detail'),
 
