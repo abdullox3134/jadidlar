@@ -43,7 +43,6 @@ class YangiliklarSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         images = instance.yangilik_images.all()
-        print(images)
 
         if images:
             data['images'] = [{'image': img.image.url} for img in images]
