@@ -34,7 +34,7 @@ class VideolarListView(ListAPIView):
     pagination_class = ResultsSetPagination
 
     def get_queryset(self):
-        return Videolar.objects.all()
+        return Videolar.objects.all().order_by('-create')
 
 
 @api_view(['GET'])
