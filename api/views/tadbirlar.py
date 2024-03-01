@@ -51,7 +51,7 @@ class YangiliklarListView(ListAPIView):
     pagination_class = ResultsSetPagination
 
     def get_queryset(self):
-        return Yangiliklar.objects.all()
+        return Yangiliklar.objects.all().order_by('-created_at')
 
 
 @api_view(['GET'])
