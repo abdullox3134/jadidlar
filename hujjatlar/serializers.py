@@ -2,8 +2,6 @@ from rest_framework import serializers
 
 from .models import Asarlar, Maqolalar, Tadqiqotlar, Sherlar, Hotiralar, Arxiv_hujjatlar, Dissertatsiya
 
-# from django.conf import settings
-
 
 class AsarlarSerializer(serializers.ModelSerializer):
     jadid_fullname = serializers.SerializerMethodField()
@@ -15,15 +13,6 @@ class AsarlarSerializer(serializers.ModelSerializer):
     def get_jadid_fullname(self, obj):
         return obj.jadid.fullname if obj.jadid else None
 
-    # def to_representation(self, instance):
-    #     data = super().to_representation(instance)
-    #     files = instance.files.all()
-    #
-    #     if files:
-    #         request = self.context.get('request')
-    #         data['files'] = [{'file': request.build_absolute_uri(img.file.url)} for img in files]
-    #
-    #     return data
     def to_representation(self, instance):
         data = super().to_representation(instance)
         files = instance.files.all()
@@ -36,6 +25,12 @@ class AsarlarSerializer(serializers.ModelSerializer):
                 data['files'] = [{'file': img.file.url} for img in files]
 
         return data
+
+
+class AsarlarLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Asarlar
+        fields = ['id', 'likes',]
 
 
 class MaqolalarSerializer(serializers.ModelSerializer):
@@ -57,6 +52,12 @@ class MaqolalarSerializer(serializers.ModelSerializer):
             data['files'] = [{'file': request.build_absolute_uri(img.file.url)} for img in files]
 
         return data
+
+
+class MaqolalarLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Maqolalar
+        fields = ['id', 'likes',]
 
 
 class TadqiqotlarSerializer(serializers.ModelSerializer):
@@ -101,6 +102,12 @@ class SherlarSerializer(serializers.ModelSerializer):
         return data
 
 
+class SherlarLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sherlar
+        fields = ['id', 'likes',]
+
+
 class HotiralarSerializer(serializers.ModelSerializer):
     jadid_fullname = serializers.SerializerMethodField()
 
@@ -120,6 +127,12 @@ class HotiralarSerializer(serializers.ModelSerializer):
             data['files'] = [{'file': request.build_absolute_uri(img.file.url)} for img in files]
 
         return data
+
+
+class HotiralarLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hotiralar
+        fields = ['id', 'likes',]
 
 
 # class HikmatlarSerializer(serializers.ModelSerializer):
@@ -154,6 +167,12 @@ class Arxiv_hujjatlarSerializer(serializers.ModelSerializer):
         return data
 
 
+class Arxiv_hujjatlarLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Arxiv_hujjatlar
+        fields = ['id', 'likes',]
+
+
 class DissertatsiyaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dissertatsiya
@@ -168,3 +187,9 @@ class DissertatsiyaSerializer(serializers.ModelSerializer):
             data['files'] = [{'file': request.build_absolute_uri(img.file.url)} for img in files]
 
         return data
+
+
+class DissertatsiyaLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Dissertatsiya
+        fields = ['id', 'likes',]

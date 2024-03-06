@@ -1,6 +1,8 @@
 from ckeditor.fields import RichTextField
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.safestring import mark_safe
+User = get_user_model()
 
 
 class Kanferensiyalar(models.Model):
@@ -9,6 +11,9 @@ class Kanferensiyalar(models.Model):
     image = models.ImageField(upload_to='image')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(User, related_name='liked_kanferensiyalar', blank=True)
+    blog_views = models.IntegerField(default=0)
+
 
     def __str__(self):
         return self.title
@@ -39,6 +44,8 @@ class Seminarlar(models.Model):
     image = models.ImageField(upload_to='image')
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(User, related_name='liked_seminarlar', blank=True)
+    blog_views = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -69,14 +76,16 @@ class Yangiliklar(models.Model):
     image = models.ImageField(upload_to='image')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(User, related_name='liked_yangiliklar', blank=True)
+    blog_views = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
 
-
     class Meta:
         verbose_name = 'Yangilik'
         verbose_name_plural = 'Yangiliklar'
+
 
 class YangiliklarImage(models.Model):
     yangilik = models.ForeignKey(Yangiliklar, on_delete=models.CASCADE,

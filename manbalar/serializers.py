@@ -20,7 +20,7 @@ class VideolarSerializer(serializers.ModelSerializer):
 class RasmlarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rasmlar
-        fields = ('id', 'title', 'image', 'create', 'update',)
+        fields = ('id', 'title', 'image', 'create', 'update', 'blog_views',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -31,6 +31,12 @@ class RasmlarSerializer(serializers.ModelSerializer):
             data['images'] = [{'image': request.build_absolute_uri(img.image.url)} for img in images]
 
         return data
+
+
+class RasmlarLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rasmlar
+        fields = ['id', 'likes',]
 
 
 class AudiolarSerializer(serializers.ModelSerializer):
@@ -48,3 +54,9 @@ class AudiolarSerializer(serializers.ModelSerializer):
             data['audios'] = [{'audio': request.build_absolute_uri(img.audio.url)} for img in audios]
 
         return data
+
+
+class AudiolarLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Audiolar
+        fields = ['id', 'likes',]

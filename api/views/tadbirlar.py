@@ -1,13 +1,14 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
 from api.pagination import ResultsSetPagination
 from tadbirlar.models import Kanferensiyalar, Seminarlar, Yangiliklar
-from tadbirlar.serializers import KanferensiyalarSerializer, SeminarlarSerializer, YangiliklarSerializer
+from tadbirlar.serializers import KanferensiyalarSerializer, SeminarlarSerializer, YangiliklarSerializer, \
+    YangiliklarLikeSerializer, SeminarlarLikeSerializer, KanferensiyalarLikeSerializer
 
 from rest_framework.decorators import api_view
-from rest_framework import filters
+from rest_framework import filters, status
 
 
 class KanferensiyalarListView(ListAPIView):
@@ -23,8 +24,35 @@ class KanferensiyalarListView(ListAPIView):
 @api_view(['GET'])
 def kanferensiyalardetail(request, pk):
     kanferensiyalar = get_object_or_404(Kanferensiyalar, pk=pk)
+    kanferensiyalar.blog_views += 1
+    kanferensiyalar.save()
     serializer = KanferensiyalarSerializer(kanferensiyalar, context={'request': request})
     return Response(serializer.data)
+
+
+class KanferensiyalarLikeAPIView(RetrieveUpdateAPIView):
+    queryset = Kanferensiyalar.objects.all()
+    serializer_class = KanferensiyalarLikeSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+
+        if user.is_authenticated:
+            existing_like = instance.likes.filter(id=user.id).exists()
+            if not existing_like:
+                instance.likes.add(user)
+            else:
+                instance.likes.remove(user)
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Kanferensiyalar, pk=pk)
 
 
 class SeminarlarListView(ListAPIView):
@@ -40,8 +68,35 @@ class SeminarlarListView(ListAPIView):
 @api_view(['GET'])
 def seminarlardetail(request, pk):
     seminarlar = get_object_or_404(Seminarlar, pk=pk)
+    seminarlar.blog_views += 1
+    seminarlar.save()
     serializer = SeminarlarSerializer(seminarlar, context={'request': request})
     return Response(serializer.data)
+
+
+class SeminarlarLikeAPIView(RetrieveUpdateAPIView):
+    queryset = Seminarlar.objects.all()
+    serializer_class = SeminarlarLikeSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+
+        if user.is_authenticated:
+            existing_like = instance.likes.filter(id=user.id).exists()
+            if not existing_like:
+                instance.likes.add(user)
+            else:
+                instance.likes.remove(user)
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Seminarlar, pk=pk)
 
 
 class YangiliklarListView(ListAPIView):
@@ -57,5 +112,32 @@ class YangiliklarListView(ListAPIView):
 @api_view(['GET'])
 def yangiliklardetail(request, pk):
     yangiliklar = get_object_or_404(Yangiliklar, pk=pk)
+    yangiliklar.blog_views += 1
+    yangiliklar.save()
     serializer = YangiliklarSerializer(yangiliklar, context={'request': request})
     return Response(serializer.data)
+
+
+class YangiliklarLikeAPIView(RetrieveUpdateAPIView):
+    queryset = Yangiliklar.objects.all()
+    serializer_class = YangiliklarLikeSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+
+        if user.is_authenticated:
+            existing_like = instance.likes.filter(id=user.id).exists()
+            if not existing_like:
+                instance.likes.add(user)
+            else:
+                instance.likes.remove(user)
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Yangiliklar, pk=pk)

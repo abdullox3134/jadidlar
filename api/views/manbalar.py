@@ -1,13 +1,14 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
 from api.pagination import ResultsSetPagination
 from manbalar.models import Audiolar, Videolar, Rasmlar
-from manbalar.serializers import AudiolarSerializer, VideolarSerializer, RasmlarSerializer
+from manbalar.serializers import AudiolarSerializer, VideolarSerializer, RasmlarSerializer, AudiolarLikeSerializer, \
+    RasmlarLikeSerializer
 
 from rest_framework.decorators import api_view
-from rest_framework import filters
+from rest_framework import filters, status
 
 
 class AudiolarListView(ListAPIView):
@@ -25,6 +26,31 @@ def audiolardetail(request, pk):
     audiolar = get_object_or_404(Audiolar, pk=pk)
     serializer = AudiolarSerializer(audiolar, context={'request': request})
     return Response(serializer.data)
+
+
+class AudiolarLikeAPIView(RetrieveUpdateAPIView):
+    queryset = Audiolar.objects.all()
+    serializer_class = AudiolarLikeSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+
+        if user.is_authenticated:
+            existing_like = instance.likes.filter(id=user.id).exists()
+            if not existing_like:
+                instance.likes.add(user)
+            else:
+                instance.likes.remove(user)
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Audiolar, pk=pk)
 
 
 class VideolarListView(ListAPIView):
@@ -57,5 +83,32 @@ class RasmlarListView(ListAPIView):
 @api_view(['GET'])
 def rasmlardetail(request, pk):
     rasmlar = get_object_or_404(Rasmlar, pk=pk)
+    rasmlar.blog_views += 1
+    rasmlar.save()
     serializer = RasmlarSerializer(rasmlar, context={'request': request})
     return Response(serializer.data)
+
+
+class RasmlarLikeAPIView(RetrieveUpdateAPIView):
+    queryset = Rasmlar.objects.all()
+    serializer_class = RasmlarLikeSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+
+        if user.is_authenticated:
+            existing_like = instance.likes.filter(id=user.id).exists()
+            if not existing_like:
+                instance.likes.add(user)
+            else:
+                instance.likes.remove(user)
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Rasmlar, pk=pk)

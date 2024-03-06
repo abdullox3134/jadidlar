@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
@@ -7,13 +7,15 @@ from api.pagination import ResultsSetPagination
 from hujjatlar.models import Asarlar, Maqolalar, Tadqiqotlar, Sherlar, Hotiralar, Arxiv_hujjatlar, \
     Dissertatsiya
 from hujjatlar.serializers import AsarlarSerializer, MaqolalarSerializer, TadqiqotlarSerializer, SherlarSerializer, \
-    HotiralarSerializer, Arxiv_hujjatlarSerializer, DissertatsiyaSerializer
+    HotiralarSerializer, Arxiv_hujjatlarSerializer, DissertatsiyaSerializer, Arxiv_hujjatlarLikeSerializer, \
+    MaqolalarLikeSerializer, AsarlarLikeSerializer, DissertatsiyaLikeSerializer, HotiralarLikeSerializer, \
+    SherlarLikeSerializer
 
 from rest_framework.decorators import api_view
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from rest_framework import filters
+from rest_framework import filters, status
 
 
 class AsarlarListView(ListAPIView):
@@ -38,6 +40,31 @@ def asarlardetail(request, pk):
     return Response(serializer.data)
 
 
+class AsarlarLikeAPIView(RetrieveUpdateAPIView):
+    queryset = Asarlar.objects.all()
+    serializer_class = AsarlarLikeSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+
+        if user.is_authenticated:
+            existing_like = instance.likes.filter(id=user.id).exists()
+            if not existing_like:
+                instance.likes.add(user)
+            else:
+                instance.likes.remove(user)
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Asarlar, pk=pk)
+
+
 class MaqolalarListView(ListAPIView):
     search_fields = ['title']
     filter_backends = (filters.SearchFilter,)
@@ -58,6 +85,32 @@ def maqolalardetail(request, pk):
     maqolalar = get_object_or_404(Maqolalar, pk=pk)
     serializer = MaqolalarSerializer(maqolalar, context={'request': request})
     return Response(serializer.data)
+
+
+class MaqolalarLikeAPIView(RetrieveUpdateAPIView):
+    queryset = Maqolalar.objects.all()
+    serializer_class = MaqolalarLikeSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+
+        if user.is_authenticated:
+            existing_like = instance.likes.filter(id=user.id).exists()
+            if not existing_like:
+                instance.likes.add(user)
+            else:
+                instance.likes.remove(user)
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Maqolalar, pk=pk)
+
 
 
 class TadqiqotlarListView(ListAPIView):
@@ -122,6 +175,31 @@ def sherlardetail(request, pk):
     return Response(serializer.data)
 
 
+class SherlarLikeAPIView(RetrieveUpdateAPIView):
+    queryset = Sherlar.objects.all()
+    serializer_class = SherlarLikeSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+
+        if user.is_authenticated:
+            existing_like = instance.likes.filter(id=user.id).exists()
+            if not existing_like:
+                instance.likes.add(user)
+            else:
+                instance.likes.remove(user)
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Sherlar, pk=pk)
+
+
 class HotiralarListView(ListAPIView):
     search_fields = ['title']
     filter_backends = (filters.SearchFilter,)
@@ -153,6 +231,31 @@ def hotiralardetail(request, pk):
     return Response(serializer.data)
 
 
+class HotiralarLikeAPIView(RetrieveUpdateAPIView):
+    queryset = Hotiralar.objects.all()
+    serializer_class = HotiralarLikeSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+
+        if user.is_authenticated:
+            existing_like = instance.likes.filter(id=user.id).exists()
+            if not existing_like:
+                instance.likes.add(user)
+            else:
+                instance.likes.remove(user)
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Hotiralar, pk=pk)
+
+
 class Arxiv_hujjatlarListView(ListAPIView):
     search_fields = ['title']
     filter_backends = (filters.SearchFilter,)
@@ -182,6 +285,31 @@ def arxiv_hujjatlardetail(request, pk):
     return Response(serializer.data)
 
 
+class Arxiv_hujjatlarLikeAPIView(RetrieveUpdateAPIView):
+    queryset = Arxiv_hujjatlar.objects.all()
+    serializer_class = Arxiv_hujjatlarLikeSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+
+        if user.is_authenticated:
+            existing_like = instance.likes.filter(id=user.id).exists()
+            if not existing_like:
+                instance.likes.add(user)
+            else:
+                instance.likes.remove(user)
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Arxiv_hujjatlar, pk=pk)
+
+
 class DissertatsiyaListView(ListAPIView):
     search_fields = ['title']
     filter_backends = (filters.SearchFilter,)
@@ -197,3 +325,28 @@ def dissertatsiyadetail(request, pk):
     dissertatsiya = get_object_or_404(Dissertatsiya, pk=pk)
     serializer = DissertatsiyaSerializer(dissertatsiya, context={'request': request})
     return Response(serializer.data)
+
+
+class DissertatsiyaLikeAPIView(RetrieveUpdateAPIView):
+    queryset = Dissertatsiya.objects.all()
+    serializer_class = DissertatsiyaLikeSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+
+        if user.is_authenticated:
+            existing_like = instance.likes.filter(id=user.id).exists()
+            if not existing_like:
+                instance.likes.add(user)
+            else:
+                instance.likes.remove(user)
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Foydalanuvchi avtorizatsiyadan o'tmagan"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Dissertatsiya, pk=pk)

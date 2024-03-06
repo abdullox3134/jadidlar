@@ -1,6 +1,6 @@
 from hujjatlar.serializers import AsarlarSerializer, MaqolalarSerializer, TadqiqotlarSerializer, SherlarSerializer, \
     HotiralarSerializer
-from jadidlar.models import Jadid#, Like, User
+from jadidlar.models import Jadid
 from hikmatli_sozlar.serializers import Hikmatli_sozlarSerializer
 from rest_framework import serializers
 
@@ -9,7 +9,7 @@ class JadidSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jadid
         fields = ('id', 'fullname', 'image', 'bio', 'birthday', 'die_day', 'order', 'create', 'update',
-                  'hikmatli_sozlar', 'asarlar', 'maqolalar', 'tadqiqotlar', 'sherlar', 'hotiralar',)
+                  'blog_views', 'hikmatli_sozlar', 'asarlar', 'maqolalar', 'tadqiqotlar', 'sherlar', 'hotiralar',)
 
     def to_representation(self, instance):
         request = self.context.get('request')
@@ -76,14 +76,3 @@ class JadidSerializer(serializers.ModelSerializer):
             data['images'] = [{'image': base_url + img.image.url} for img in images]
 
         return data
-
-
-class LikeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Jadid
-        fields = ['id', 'likes', 'blog_views',]
-
-
-
-
-

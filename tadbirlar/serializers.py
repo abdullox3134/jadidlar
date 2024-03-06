@@ -5,7 +5,7 @@ from tadbirlar.models import Kanferensiyalar, Seminarlar, Yangiliklar
 class KanferensiyalarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Kanferensiyalar
-        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at')
+        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at', 'blog_views',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -19,10 +19,16 @@ class KanferensiyalarSerializer(serializers.ModelSerializer):
         return data
 
 
+class KanferensiyalarLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Kanferensiyalar
+        fields = ['id', 'likes',]
+
+
 class SeminarlarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Seminarlar
-        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at')
+        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at', 'blog_views',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -35,10 +41,16 @@ class SeminarlarSerializer(serializers.ModelSerializer):
         return data
 
 
+class SeminarlarLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Seminarlar
+        fields = ['id', 'likes',]
+
+
 class YangiliklarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Yangiliklar
-        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at')
+        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at', 'blog_views',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -48,3 +60,9 @@ class YangiliklarSerializer(serializers.ModelSerializer):
             data['images'] = [{'image': img.image.url} for img in images]
 
         return data
+
+
+class YangiliklarLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Yangiliklar
+        fields = ['id', 'likes',]

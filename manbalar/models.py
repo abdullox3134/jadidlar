@@ -1,7 +1,10 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+
+User = get_user_model()
 
 
 def validate_audio_extension(value):
@@ -16,6 +19,8 @@ class Audiolar(models.Model):
     audio = models.FileField(upload_to='audios/', validators=[validate_audio_extension])
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(User, related_name='liked_audiolar', blank=True)
+
 
     def __str__(self):
         return self.title
@@ -80,6 +85,8 @@ class Rasmlar(models.Model):
     # file = models.FileField(upload_to='files/')
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(User, related_name='liked_rasmlar', blank=True)
+    blog_views = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
