@@ -11,7 +11,8 @@ class Kanferensiyalar(models.Model):
     image = models.ImageField(upload_to='image')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    likes = models.ManyToManyField(User, related_name='liked_kanferensiyalar', blank=True)
+    likes = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, related_name='liked_kanferensiyalar', blank=True)
     blog_views = models.IntegerField(default=0)
 
 
@@ -44,7 +45,8 @@ class Seminarlar(models.Model):
     image = models.ImageField(upload_to='image')
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
-    likes = models.ManyToManyField(User, related_name='liked_seminarlar', blank=True)
+    likes = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, related_name='liked_seminarlar', blank=True)
     blog_views = models.IntegerField(default=0)
 
     def __str__(self):
@@ -76,7 +78,8 @@ class Yangiliklar(models.Model):
     image = models.ImageField(upload_to='image')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    likes = models.ManyToManyField(User, related_name='liked_yangiliklar', blank=True)
+    likes = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, related_name='liked_yangiliklar', blank=True)
     blog_views = models.IntegerField(default=0)
 
     def __str__(self):

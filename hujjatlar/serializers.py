@@ -8,7 +8,7 @@ class AsarlarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Asarlar
-        fields = ('id', 'title', 'jadid_fullname', 'jadid', 'create', 'update', 'image', 'file', 'count',)
+        fields = ('id', 'title', 'jadid_fullname', 'jadid', 'create', 'update', 'image', 'file', 'count', 'likes',)
 
     def get_jadid_fullname(self, obj):
         return obj.jadid.fullname if obj.jadid else None
@@ -38,7 +38,8 @@ class MaqolalarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Maqolalar
-        fields = ('id', 'title', 'jadid_fullname', 'jadid', 'create', 'update', 'image', 'file', 'count', 'type')
+        fields = ('id', 'title', 'jadid_fullname', 'jadid', 'create', 'update', 'image', 'file', 'count', 'type',
+                  'likes',)
 
     def get_jadid_fullname(self, obj):
         return obj.jadid.fullname if obj.jadid else None
@@ -86,7 +87,8 @@ class SherlarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sherlar
-        fields = ('id', 'title', 'jadid_fullname', 'jadid', 'create', 'update', 'image', 'file', 'type', 'count',)
+        fields = ('id', 'title', 'jadid_fullname', 'jadid', 'create', 'update', 'image', 'file', 'type', 'count',
+                  'likes',)
 
     def get_jadid_fullname(self, obj):
         return obj.jadid.fullname if obj.jadid else None
@@ -113,7 +115,8 @@ class HotiralarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Hotiralar
-        fields = ('id', 'title', 'jadid_fullname', 'jadid', 'create', 'update', 'image', 'file', 'type', 'count',)
+        fields = ('id', 'title', 'jadid_fullname', 'jadid', 'create', 'update', 'image', 'file', 'type', 'count',
+                  'likes',)
 
     def get_jadid_fullname(self, obj):
         return obj.jadid.fullname if obj.jadid else None
@@ -154,7 +157,7 @@ class HotiralarLikeSerializer(serializers.ModelSerializer):
 class Arxiv_hujjatlarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Arxiv_hujjatlar
-        fields = ('id', 'title', 'type', 'image', 'file', 'count',)
+        fields = ('id', 'title', 'type', 'image', 'file', 'count', 'likes',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -176,7 +179,7 @@ class Arxiv_hujjatlarLikeSerializer(serializers.ModelSerializer):
 class DissertatsiyaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dissertatsiya
-        fields = ('id', 'title', 'image', 'file', 'create', 'update', 'count',)
+        fields = ('id', 'title', 'image', 'file', 'create', 'update', 'count', 'likes',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

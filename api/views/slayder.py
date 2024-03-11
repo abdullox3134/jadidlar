@@ -17,7 +17,7 @@ class SlayderListView(ListAPIView):
     pagination_class = ResultsSetPagination
 
     def get_queryset(self):
-        return Slayder.objects.all()
+        return Slayder.objects.all().order_by('-create')
 
 
 @api_view(['GET'])

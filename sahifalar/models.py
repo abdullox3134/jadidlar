@@ -18,6 +18,7 @@ class Sahifalar(models.Model):
         verbose_name = 'Sahifa'
         verbose_name_plural = 'Sahifalar'
 
+
 class SahifalarFile(models.Model):
     sahifalar = models.ForeignKey(Sahifalar, on_delete=models.CASCADE, related_name='files')
     file = models.FileField(upload_to='files/sahifalar')

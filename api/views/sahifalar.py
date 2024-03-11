@@ -17,7 +17,7 @@ class SahifalarListView(ListAPIView):
     pagination_class = ResultsSetPagination
 
     def get_queryset(self):
-        return Sahifalar.objects.all()
+        return Sahifalar.objects.all().order_by('-create')
 
 
 @api_view(['GET'])

@@ -6,6 +6,7 @@ class Ishtirokchilar(models.Model):
     fullname = models.CharField(max_length=100, blank=True, null=True)
     position = models.CharField(max_length=100, verbose_name='Lavozimi', blank=True, null=True)
     image = models.ImageField(upload_to='image')
+    order = models.IntegerField(default=100, blank=True, null=True)
 
     def __str__(self):
         return self.fullname

@@ -20,7 +20,14 @@ class Hikmatli_sozlarListView(ListAPIView):
     filterset_fields = ['jadid__id', ]
 
     def get_queryset(self):
-        return Hikmatli_sozlar.objects.all()
+        return Hikmatli_sozlar.objects.all().order_by('-create')
+
+
+@api_view(['GET'])
+def get_random_hikmatlar(request):
+    query = list(Hikmatli_sozlar.objects.all().order_by('?')[:5])
+    serializer = Hikmatli_sozlarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
 
 
 @api_view(['GET'])

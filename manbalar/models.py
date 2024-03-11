@@ -19,8 +19,8 @@ class Audiolar(models.Model):
     audio = models.FileField(upload_to='audios/', validators=[validate_audio_extension])
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
-    likes = models.ManyToManyField(User, related_name='liked_audiolar', blank=True)
-
+    likes = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, related_name='liked_audiolar', blank=True)
 
     def __str__(self):
         return self.title
@@ -85,7 +85,8 @@ class Rasmlar(models.Model):
     # file = models.FileField(upload_to='files/')
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
-    likes = models.ManyToManyField(User, related_name='liked_rasmlar', blank=True)
+    likes = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, related_name='liked_rasmlar', blank=True)
     blog_views = models.IntegerField(default=0)
 
     def __str__(self):

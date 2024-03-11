@@ -19,8 +19,8 @@ class Asarlar(models.Model):
     turkiston_muxtoriyati = models.BooleanField(default=False, verbose_name='Turkiston muxtoriyati')
     tadqiqotlar = models.BooleanField(default=False, verbose_name='Tadqiqotlar')
     til_va_imlo = models.BooleanField(default=False, verbose_name='Til va imlo')
-    likes = models.ManyToManyField(User, related_name='liked_asarlar', blank=True)
-
+    likes = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, related_name='liked_asarlar', blank=True)
 
     def __str__(self):
         return self.title
@@ -72,8 +72,8 @@ class Maqolalar(models.Model):
         (Bibliografik_korsatkich, 'Bibliografik korsatkich'),
     )
     type = models.CharField(max_length=30, choices=TYPE_CHOICE, verbose_name='matbuotlar', blank=True, null=True)
-    likes = models.ManyToManyField(User, related_name='liked_maqolalar', blank=True)
-
+    likes = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, related_name='liked_maqolalar', blank=True)
     def __str__(self):
         return self.title
 
@@ -141,8 +141,8 @@ class Sherlar(models.Model):
         (Til_va_imlo, 'Til va imlo'),
     )
     type = models.CharField(max_length=25, choices=TYPE_CHOICE, verbose_name='turi', default=Turkiston_muxtoriyati, blank=True, null=True)
-    likes = models.ManyToManyField(User, related_name='liked_sherlar', blank=True)
-
+    likes = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, related_name='liked_sherlar', blank=True)
 
     def __str__(self):
         return self.title
@@ -177,8 +177,8 @@ class Hotiralar(models.Model):
         (Til_va_imlo, 'Til va imlo'),
     )
     type = models.CharField(max_length=25, choices=TYPE_CHOICE, verbose_name='turi', default=Turkiston_muxtoriyati, blank=True, null=True)
-    likes = models.ManyToManyField(User, related_name='liked_hotiralar', blank=True)
-
+    likes = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, related_name='liked_hotiralar', blank=True)
 
     def __str__(self):
         return self.title
@@ -224,8 +224,8 @@ class Arxiv_hujjatlar(models.Model):
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     file = models.FileField(upload_to='files/arxiv_hujjatlar', verbose_name='fayl')
     count = models.BigIntegerField(null=True, blank=True, default=0)
-    likes = models.ManyToManyField(User, related_name='liked_arxiv_hujjatlar', blank=True)
-
+    likes = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, related_name='liked_arxiv_hujjatlar', blank=True)
     def __str__(self):
         return self.title
 
@@ -250,8 +250,8 @@ class Dissertatsiya(models.Model):
     count = models.BigIntegerField(null=True, blank=True, default=0)
     create = models.DateTimeField(auto_now_add=True, verbose_name='yaratilgan sana')
     update = models.DateTimeField(auto_now=True, verbose_name='o`zgartirilgan sana')
-    likes = models.ManyToManyField(User, related_name='liked_dissertatsiya', blank=True)
-
+    likes = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, related_name='liked_dissertatsiya', blank=True)
 
     def __str__(self):
         return self.title

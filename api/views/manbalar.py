@@ -18,7 +18,7 @@ class AudiolarListView(ListAPIView):
     pagination_class = ResultsSetPagination
 
     def get_queryset(self):
-        return Audiolar.objects.all()
+        return Audiolar.objects.all().order_by('-create')
 
 
 @api_view(['GET'])
@@ -37,11 +37,13 @@ class AudiolarLikeAPIView(RetrieveUpdateAPIView):
         user = request.user
 
         if user.is_authenticated:
-            existing_like = instance.likes.filter(id=user.id).exists()
+            existing_like = instance.users.filter(id=user.id).exists()
             if not existing_like:
-                instance.likes.add(user)
+                instance.users.add(user)
+                instance.likes += 1
             else:
-                instance.likes.remove(user)
+                instance.users.remove(user)
+                instance.likes -= 1
             instance.save()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
@@ -77,7 +79,7 @@ class RasmlarListView(ListAPIView):
     pagination_class = ResultsSetPagination
 
     def get_queryset(self):
-        return Rasmlar.objects.all()
+        return Rasmlar.objects.all().order_by('-create')
 
 
 @api_view(['GET'])
@@ -98,11 +100,13 @@ class RasmlarLikeAPIView(RetrieveUpdateAPIView):
         user = request.user
 
         if user.is_authenticated:
-            existing_like = instance.likes.filter(id=user.id).exists()
+            existing_like = instance.users.filter(id=user.id).exists()
             if not existing_like:
-                instance.likes.add(user)
+                instance.users.add(user)
+                instance.likes += 1
             else:
-                instance.likes.remove(user)
+                instance.users.remove(user)
+                instance.likes -= 1
             instance.save()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)

@@ -30,7 +30,28 @@ class AsarlarListView(ListAPIView):
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Asarlar.objects.all()
+        return Asarlar.objects.all().order_by('-create')
+
+
+@api_view(['GET'])
+def get_random_izlanish_asar(request):
+    query = Asarlar.objects.filter(tadqiqotlar=True).order_by('?')[:5]
+    serializer = AsarlarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_random_tilimlo_asar(request):
+    query = Asarlar.objects.filter(til_va_imlo=True).order_by('?')[:5]
+    serializer = AsarlarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_random_turkiston_asar(request):
+    query = Asarlar.objects.filter(turkiston_muxtoriyati=True).order_by('?')[:5]
+    serializer = AsarlarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -49,11 +70,13 @@ class AsarlarLikeAPIView(RetrieveUpdateAPIView):
         user = request.user
 
         if user.is_authenticated:
-            existing_like = instance.likes.filter(id=user.id).exists()
+            existing_like = instance.users.filter(id=user.id).exists()
             if not existing_like:
-                instance.likes.add(user)
+                instance.users.add(user)
+                instance.likes += 1
             else:
-                instance.likes.remove(user)
+                instance.users.remove(user)
+                instance.likes -= 1
             instance.save()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
@@ -77,7 +100,35 @@ class MaqolalarListView(ListAPIView):
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Maqolalar.objects.all()
+        return Maqolalar.objects.all().order_by('-create')
+
+
+@api_view(['GET'])
+def get_random_izlanish_maqola(request):
+    query = Maqolalar.objects.filter(tadqiqotlar=True).order_by('?')[:5]
+    serializer = MaqolalarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_random_tilimlo_maqola(request):
+    query = Maqolalar.objects.filter(til_va_imlo=True).order_by('?')[:5]
+    serializer = MaqolalarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_random_turkiston_maqola(request):
+    query = Maqolalar.objects.filter(turkiston_muxtoriyati=True).order_by('?')[:5]
+    serializer = MaqolalarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_random_turkiston_matbuot(request):
+    query = Maqolalar.objects.filter(type='Iqtisod').order_by('?')[:5]
+    serializer = MaqolalarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -96,11 +147,13 @@ class MaqolalarLikeAPIView(RetrieveUpdateAPIView):
         user = request.user
 
         if user.is_authenticated:
-            existing_like = instance.likes.filter(id=user.id).exists()
+            existing_like = instance.users.filter(id=user.id).exists()
             if not existing_like:
-                instance.likes.add(user)
+                instance.users.add(user)
+                instance.likes += 1
             else:
-                instance.likes.remove(user)
+                instance.users.remove(user)
+                instance.likes -= 1
             instance.save()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
@@ -110,7 +163,6 @@ class MaqolalarLikeAPIView(RetrieveUpdateAPIView):
     def get_object(self):
         pk = self.kwargs.get('pk')
         return get_object_or_404(Maqolalar, pk=pk)
-
 
 
 class TadqiqotlarListView(ListAPIView):
@@ -134,7 +186,7 @@ class TadqiqotlarListView(ListAPIView):
         if type_param:
             return Tadqiqotlar.objects.filter(type=type_param)
         else:
-            return Tadqiqotlar.objects.all()
+            return Tadqiqotlar.objects.all().order_by('-create')
 
 
 @api_view(['GET'])
@@ -165,7 +217,14 @@ class SherlarListView(ListAPIView):
         if type_param:
             return Sherlar.objects.filter(type=type_param)
         else:
-            return Sherlar.objects.all()
+            return Sherlar.objects.all().order_by('-create')
+
+
+@api_view(['GET'])
+def get_random_turkiston_sher(request):
+    query = Sherlar.objects.filter(type='Turkiston muxtoriyati').order_by('?')[:5]
+    serializer = SherlarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -184,11 +243,13 @@ class SherlarLikeAPIView(RetrieveUpdateAPIView):
         user = request.user
 
         if user.is_authenticated:
-            existing_like = instance.likes.filter(id=user.id).exists()
+            existing_like = instance.users.filter(id=user.id).exists()
             if not existing_like:
-                instance.likes.add(user)
+                instance.users.add(user)
+                instance.likes += 1
             else:
-                instance.likes.remove(user)
+                instance.users.remove(user)
+                instance.likes -= 1
             instance.save()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
@@ -221,7 +282,21 @@ class HotiralarListView(ListAPIView):
         if type_param:
             return Hotiralar.objects.filter(type=type_param)
         else:
-            return Hotiralar.objects.all()
+            return Hotiralar.objects.all().order_by('-create')
+
+
+@api_view(['GET'])
+def get_random_izlanish_hotira(request):
+    query = Hotiralar.objects.filter(type='Tadqiqotlar').order_by('?')[:5]
+    serializer = HotiralarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_random_turkiston_hotira(request):
+    query = Hotiralar.objects.filter(type='Turkiston muxtoriyati').order_by('?')[:5]
+    serializer = HotiralarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -240,11 +315,13 @@ class HotiralarLikeAPIView(RetrieveUpdateAPIView):
         user = request.user
 
         if user.is_authenticated:
-            existing_like = instance.likes.filter(id=user.id).exists()
+            existing_like = instance.users.filter(id=user.id).exists()
             if not existing_like:
-                instance.likes.add(user)
+                instance.users.add(user)
+                instance.likes += 1
             else:
-                instance.likes.remove(user)
+                instance.users.remove(user)
+                instance.likes -= 1
             instance.save()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
@@ -275,7 +352,14 @@ class Arxiv_hujjatlarListView(ListAPIView):
         if type_param:
             return Arxiv_hujjatlar.objects.filter(type=type_param)
         else:
-            return Arxiv_hujjatlar.objects.all()
+            return Arxiv_hujjatlar.objects.all().order_by('-id')
+
+
+@api_view(['GET'])
+def get_random_arxov(request):
+    query = list(Arxiv_hujjatlar.objects.all().order_by('?')[:5])  # Shuffle and slice
+    serializer = Arxiv_hujjatlarSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -294,11 +378,13 @@ class Arxiv_hujjatlarLikeAPIView(RetrieveUpdateAPIView):
         user = request.user
 
         if user.is_authenticated:
-            existing_like = instance.likes.filter(id=user.id).exists()
+            existing_like = instance.users.filter(id=user.id).exists()
             if not existing_like:
-                instance.likes.add(user)
+                instance.users.add(user)
+                instance.likes += 1
             else:
-                instance.likes.remove(user)
+                instance.users.remove(user)
+                instance.likes -= 1
             instance.save()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
@@ -317,7 +403,14 @@ class DissertatsiyaListView(ListAPIView):
     pagination_class = ResultsSetPagination
 
     def get_queryset(self):
-        return Dissertatsiya.objects.all()
+        return Dissertatsiya.objects.all().order_by('-create')
+
+
+@api_view(['GET'])
+def get_random_dissertatsiya(request):
+    query = list(Dissertatsiya.objects.all().order_by('?')[:5])  # Shuffle and slice
+    serializer = DissertatsiyaSerializer(query, many=True, context={'request': request})
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -336,11 +429,13 @@ class DissertatsiyaLikeAPIView(RetrieveUpdateAPIView):
         user = request.user
 
         if user.is_authenticated:
-            existing_like = instance.likes.filter(id=user.id).exists()
+            existing_like = instance.users.filter(id=user.id).exists()
             if not existing_like:
-                instance.likes.add(user)
+                instance.users.add(user)
+                instance.likes += 1
             else:
-                instance.likes.remove(user)
+                instance.users.remove(user)
+                instance.likes -= 1
             instance.save()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)

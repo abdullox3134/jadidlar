@@ -20,7 +20,7 @@ class VideolarSerializer(serializers.ModelSerializer):
 class RasmlarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rasmlar
-        fields = ('id', 'title', 'image', 'create', 'update', 'blog_views',)
+        fields = ('id', 'title', 'image', 'create', 'update', 'blog_views', 'likes',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -42,7 +42,7 @@ class RasmlarLikeSerializer(serializers.ModelSerializer):
 class AudiolarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Audiolar
-        fields = ('id', 'title', 'image', 'audio', 'create', 'update',)
+        fields = ('id', 'title', 'image', 'audio', 'create', 'update', 'likes',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

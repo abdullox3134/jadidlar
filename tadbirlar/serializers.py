@@ -5,7 +5,7 @@ from tadbirlar.models import Kanferensiyalar, Seminarlar, Yangiliklar
 class KanferensiyalarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Kanferensiyalar
-        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at', 'blog_views',)
+        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at', 'blog_views', 'likes',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -28,7 +28,7 @@ class KanferensiyalarLikeSerializer(serializers.ModelSerializer):
 class SeminarlarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Seminarlar
-        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at', 'blog_views',)
+        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at', 'blog_views', 'likes',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -50,7 +50,7 @@ class SeminarlarLikeSerializer(serializers.ModelSerializer):
 class YangiliklarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Yangiliklar
-        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at', 'blog_views',)
+        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at', 'blog_views', 'likes',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

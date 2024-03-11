@@ -4,13 +4,16 @@ from api.views.down import FileDownMaqolaView, FileDownAsarView, FileDownTadqiqo
     FileDownHotiraView, FileDownArxiv_hujjatView, FileDownDissertatsiyaView, FileDownSahifaView
 from api.views.foydali_havolalar import Foydali_havolalarListView, foydali_havolalardetail
 from api.views.full_text_search import full_text_search
-from api.views.hikmatli_sozlar import Hikmatli_sozlarListView, hikmatli_sozlardetail
+from api.views.hikmatli_sozlar import Hikmatli_sozlarListView, hikmatli_sozlardetail, get_random_hikmatlar
 from api.views.hujjatlar import AsarlarListView, asarlardetail, MaqolalarListView, maqolalardetail, TadqiqotlarListView, \
     tadqiqotlardetail, SherlarListView, sherlardetail, HotiralarListView, hotiralardetail, Arxiv_hujjatlarListView, \
     arxiv_hujjatlardetail, DissertatsiyaListView, dissertatsiyadetail, Arxiv_hujjatlarLikeAPIView, MaqolalarLikeAPIView, \
-    AsarlarLikeAPIView, DissertatsiyaLikeAPIView, HotiralarLikeAPIView, SherlarLikeAPIView
+    AsarlarLikeAPIView, DissertatsiyaLikeAPIView, HotiralarLikeAPIView, SherlarLikeAPIView, get_random_arxov, \
+    get_random_tilimlo_asar, get_random_izlanish_asar, get_random_turkiston_asar, get_random_tilimlo_maqola, \
+    get_random_izlanish_maqola, get_random_turkiston_maqola, get_random_izlanish_hotira, get_random_turkiston_hotira, \
+    get_random_turkiston_sher, get_random_dissertatsiya, get_random_turkiston_matbuot
 from api.views.ishtirokchilar import IshtirokchilarListView, ishtirokchilardetail
-from api.views.jadidlar import JadidlarListView, jadidlardetail
+from api.views.jadidlar import JadidlarListView, jadidlardetail, get_random_jadid
 from api.views.manbalar import AudiolarListView, audiolardetail, VideolarListView, videolardetail, RasmlarListView, \
     rasmlardetail, AudiolarLikeAPIView, RasmlarLikeAPIView
 from api.views.sahifalar import SahifalarListView, sahifalardetail
@@ -34,13 +37,21 @@ urlpatterns = [
     path('foydali_havolalar/<int:pk>/', foydali_havolalardetail, name='foydali_havolalar-detail'),
 
     path('hikmatli_sozlar/', Hikmatli_sozlarListView.as_view(), name='hikmatli_sozlar-list'),
+    path('hikmatli_sozlar_random/', get_random_hikmatlar, name='hikmatli_sozlar_randomr-list'),
     path('hikmatli_sozlar/<int:pk>/', hikmatli_sozlardetail, name='hikmatli_sozlar-detail'),
 
     path('asarlar/', AsarlarListView.as_view(), name='asarlar-list'),
+    path('asarlar_random_tilimlo/', get_random_tilimlo_asar, name='asarlar-list'),
+    path('asarlar_random_izlanish/', get_random_izlanish_asar, name='asarlar-list'),
+    path('asarlar_random_turkiston/', get_random_turkiston_asar, name='asarlar-list'),
     path('asarlar/<int:pk>/', asarlardetail, name='asarlar-detail'),
     path('asarlar/<int:pk>/like/', AsarlarLikeAPIView.as_view(), name='post_likes'),
 
     path('maqolalar/', MaqolalarListView.as_view(), name='maqolalar-list'),
+    path('maqolalar_random_tilimlo/', get_random_tilimlo_maqola, name='maqolalar-list'),
+    path('maqolalar_random_izlanish/', get_random_izlanish_maqola, name='maqolalar-list'),
+    path('maqolalar_random_turkiston/', get_random_turkiston_maqola, name='maqolalar-list'),
+    path('maqolalar_random_matbuot_iqtisod/', get_random_turkiston_matbuot, name='maqolalar-list'),
     path('maqolalar/<int:pk>/', maqolalardetail, name='maqolalar-detail'),
     path('maqolalar/<int:pk>/like/', MaqolalarLikeAPIView.as_view(), name='post_likes'),
 
@@ -48,18 +59,23 @@ urlpatterns = [
     path('tadqiqotlar/<int:pk>/', tadqiqotlardetail, name='tadqiqotlar-detail'),
 
     path('sherlar/', SherlarListView.as_view(), name='sherlar-list'),
+    path('hotiralar_random_turkiston/', get_random_turkiston_sher, name='hotiralar-list'),
     path('sherlar/<int:pk>/', sherlardetail, name='sherlar-detail'),
     path('sherlar/<int:pk>/like/', SherlarLikeAPIView.as_view(), name='post_likes'),
 
     path('hotiralar/', HotiralarListView.as_view(), name='hotiralar-list'),
+    path('hotiralar_random_izlanish/', get_random_izlanish_hotira, name='hotiralar-list'),
+    path('hotiralar_random_turkiston/', get_random_turkiston_hotira, name='hotiralar-list'),
     path('hotiralar/<int:pk>/', hotiralardetail, name='hotiralar-detail'),
     path('hotiralar/<int:pk>/like/', HotiralarLikeAPIView.as_view(), name='post_likes'),
 
     path('arxiv_hujjatlar/', Arxiv_hujjatlarListView.as_view(), name='arxiv_hujjatlar-list'),
+    path('arxiv_random/', get_random_arxov, name='arxiv_randomr-list'),
     path('arxiv_hujjatlar/<int:pk>/', arxiv_hujjatlardetail, name='arxiv_hujjatlar-detail'),
     path('arxiv_hujjatlar/<int:pk>/like/', Arxiv_hujjatlarLikeAPIView.as_view(), name='post_likes'),
 
     path('dissertatsiya/', DissertatsiyaListView.as_view(), name='dissertatsiya-list'),
+    path('dissertatsiya_random/', get_random_dissertatsiya, name='dissertatsiya_randomr-list'),
     path('dissertatsiya/<int:pk>/', dissertatsiyadetail, name='dissertatsiya-detail'),
     path('dissertatsiya/<int:pk>/like/', DissertatsiyaLikeAPIView.as_view(), name='post_likes'),
 
@@ -67,6 +83,7 @@ urlpatterns = [
     path('ishtirokchilar/<int:pk>/', ishtirokchilardetail, name='ishtirokchilar-detail'),
 
     path('jadidlar/', JadidlarListView.as_view(), name='jadidlar-list'),
+    path('jadidlar_random/', get_random_jadid, name='jadidlar_randomr-list'),
     path('jadidlar/<int:pk>/', jadidlardetail, name='jadidlar-detail'),
 
     path('audiolar/', AudiolarListView.as_view(), name='audiolar-list'),

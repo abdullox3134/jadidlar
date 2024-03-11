@@ -18,7 +18,7 @@ class KanferensiyalarListView(ListAPIView):
     pagination_class = ResultsSetPagination
 
     def get_queryset(self):
-        return Kanferensiyalar.objects.all()
+        return Kanferensiyalar.objects.all().order_by('-created_at')
 
 
 @api_view(['GET'])
@@ -39,11 +39,13 @@ class KanferensiyalarLikeAPIView(RetrieveUpdateAPIView):
         user = request.user
 
         if user.is_authenticated:
-            existing_like = instance.likes.filter(id=user.id).exists()
+            existing_like = instance.users.filter(id=user.id).exists()
             if not existing_like:
-                instance.likes.add(user)
+                instance.users.add(user)
+                instance.likes += 1
             else:
-                instance.likes.remove(user)
+                instance.users.remove(user)
+                instance.likes -= 1
             instance.save()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
@@ -62,7 +64,7 @@ class SeminarlarListView(ListAPIView):
     pagination_class = ResultsSetPagination
 
     def get_queryset(self):
-        return Seminarlar.objects.all()
+        return Seminarlar.objects.all().order_by('-created_at')
 
 
 @api_view(['GET'])
@@ -83,11 +85,13 @@ class SeminarlarLikeAPIView(RetrieveUpdateAPIView):
         user = request.user
 
         if user.is_authenticated:
-            existing_like = instance.likes.filter(id=user.id).exists()
+            existing_like = instance.users.filter(id=user.id).exists()
             if not existing_like:
-                instance.likes.add(user)
+                instance.users.add(user)
+                instance.likes += 1
             else:
-                instance.likes.remove(user)
+                instance.users.remove(user)
+                instance.likes -= 1
             instance.save()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
@@ -127,11 +131,13 @@ class YangiliklarLikeAPIView(RetrieveUpdateAPIView):
         user = request.user
 
         if user.is_authenticated:
-            existing_like = instance.likes.filter(id=user.id).exists()
+            existing_like = instance.users.filter(id=user.id).exists()
             if not existing_like:
-                instance.likes.add(user)
+                instance.users.add(user)
+                instance.likes += 1
             else:
-                instance.likes.remove(user)
+                instance.users.remove(user)
+                instance.likes -= 1
             instance.save()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)

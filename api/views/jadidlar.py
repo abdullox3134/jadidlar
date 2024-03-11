@@ -1,3 +1,5 @@
+import random
+
 from rest_framework.generics import ListAPIView
 from django.shortcuts import get_object_or_404
 from api.pagination import ResultsSetPagination
@@ -16,6 +18,15 @@ class JadidlarListView(ListAPIView):
 
     def get_queryset(self):
         return Jadid.objects.all().order_by('order')
+
+
+@api_view(['GET'])
+def get_random_jadid(request):
+    fifteen_records = list(Jadid.objects.order_by('order')[:15])
+    random.shuffle(fifteen_records)
+    serializer = JadidSerializer(fifteen_records, many=True, context={'request': request})
+    return Response(serializer.data)
+
 
 
 @api_view(['GET'])

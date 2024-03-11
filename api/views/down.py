@@ -18,12 +18,12 @@ class FileDownAsarView(APIView):
         except Asarlar.DoesNotExist:
             return Response({"error": "File Not Found"}, status=status.HTTP_404_NOT_FOUND)
 
-        file_path = file_instance.file.path
         file_instance.count += 1
         file_instance.save()
-        response = FileResponse(open(file_path, 'rb'))
-        response['Content-Disposition'] = f'attachmand; filename="{file_instance.title}"'
-        return response
+        response = {
+            "path": request.build_absolute_uri(file_instance.file.url)
+        }
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class FileDownMaqolaView(APIView):
@@ -35,12 +35,12 @@ class FileDownMaqolaView(APIView):
         except Maqolalar.DoesNotExist:
             return Response({"error": "File Not Found"}, status=status.HTTP_404_NOT_FOUND)
 
-        file_path = file_instance.file.path
         file_instance.count += 1
         file_instance.save()
-        response = FileResponse(open(file_path, 'rb'))
-        response['Content-Disposition'] = f'attachmand; filename="{file_instance.title}"'
-        return response
+        response = {
+            "path": request.build_absolute_uri(file_instance.file.url)
+        }
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class FileDownTadqiqotView(APIView):
@@ -52,12 +52,12 @@ class FileDownTadqiqotView(APIView):
         except Tadqiqotlar.DoesNotExist:
             return Response({"error": "File Not Found"}, status=status.HTTP_404_NOT_FOUND)
 
-        file_path = file_instance.file.path
         file_instance.count += 1
         file_instance.save()
-        response = FileResponse(open(file_path, 'rb'))
-        response['Content-Disposition'] = f'attachmand; filename="{file_instance.title}"'
-        return response
+        response = {
+            "path": request.build_absolute_uri(file_instance.file.url)
+        }
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class FileDownSherView(APIView):
@@ -69,12 +69,12 @@ class FileDownSherView(APIView):
         except Sherlar.DoesNotExist:
             return Response({"error": "File Not Found"}, status=status.HTTP_404_NOT_FOUND)
 
-        file_path = file_instance.file.path
         file_instance.count += 1
         file_instance.save()
-        response = FileResponse(open(file_path, 'rb'))
-        response['Content-Disposition'] = f'attachmand; filename="{file_instance.title}"'
-        return response
+        response = {
+            "path": request.build_absolute_uri(file_instance.file.url)
+        }
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class FileDownHotiraView(APIView):
@@ -86,12 +86,12 @@ class FileDownHotiraView(APIView):
         except Hotiralar.DoesNotExist:
             return Response({"error": "File Not Found"}, status=status.HTTP_404_NOT_FOUND)
 
-        file_path = file_instance.file.path
         file_instance.count += 1
         file_instance.save()
-        response = FileResponse(open(file_path, 'rb'))
-        response['Content-Disposition'] = f'attachmand; filename="{file_instance.title}"'
-        return response
+        response = {
+            "path": request.build_absolute_uri(file_instance.file.url)
+        }
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class FileDownArxiv_hujjatView(APIView):
@@ -103,12 +103,12 @@ class FileDownArxiv_hujjatView(APIView):
         except Arxiv_hujjatlar.DoesNotExist:
             return Response({"error": "File Not Found"}, status=status.HTTP_404_NOT_FOUND)
 
-        file_path = file_instance.file.path
         file_instance.count += 1
         file_instance.save()
-        response = FileResponse(open(file_path, 'rb'))
-        response['Content-Disposition'] = f'attachmand; filename="{file_instance.title}"'
-        return response
+        response = {
+            "path": request.build_absolute_uri(file_instance.file.url)
+        }
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class FileDownDissertatsiyaView(APIView):
@@ -120,12 +120,12 @@ class FileDownDissertatsiyaView(APIView):
         except Dissertatsiya.DoesNotExist:
             return Response({"error": "File Not Found"}, status=status.HTTP_404_NOT_FOUND)
 
-        file_path = file_instance.file.path
         file_instance.count += 1
         file_instance.save()
-        response = FileResponse(open(file_path, 'rb'))
-        response['Content-Disposition'] = f'attachmand; filename="{file_instance.title}"'
-        return response
+        response = {
+            "path": request.build_absolute_uri(file_instance.file.url)
+        }
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class FileDownSahifaView(APIView):
@@ -137,9 +137,9 @@ class FileDownSahifaView(APIView):
         except Sahifalar.DoesNotExist:
             return Response({"error": "File Not Found"}, status=status.HTTP_404_NOT_FOUND)
 
-        file_path = file_instance.file.path
         file_instance.count += 1
         file_instance.save()
-        response = FileResponse(open(file_path, 'rb'))
-        response['Content-Disposition'] = f'attachmand; filename="{file_instance.title}"'
-        return response
+        response = {
+            "path": request.build_absolute_uri(file_instance.file.url)
+        }
+        return Response(response, status=status.HTTP_200_OK)
