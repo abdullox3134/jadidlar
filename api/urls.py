@@ -59,7 +59,7 @@ urlpatterns = [
     path('tadqiqotlar/<int:pk>/', tadqiqotlardetail, name='tadqiqotlar-detail'),
 
     path('sherlar/', SherlarListView.as_view(), name='sherlar-list'),
-    path('hotiralar_random_turkiston/', get_random_turkiston_sher, name='hotiralar-list'),
+    path('sherlar_random_turkiston/', get_random_turkiston_sher, name='sherlar-list'),
     path('sherlar/<int:pk>/', sherlardetail, name='sherlar-detail'),
     path('sherlar/<int:pk>/like/', SherlarLikeAPIView.as_view(), name='post_likes'),
 
