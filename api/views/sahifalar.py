@@ -2,6 +2,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
+from api.pagination import ResultsSetPagination
 from sahifalar.models import Sahifalar
 from sahifalar.serializers import SahifalarSerializer
 
@@ -13,6 +14,7 @@ class SahifalarListView(ListAPIView):
     search_fields = ['title', 'text']
     filter_backends = (filters.SearchFilter,)
     serializer_class = SahifalarSerializer
+    pagination_class = ResultsSetPagination
 
     def get_queryset(self):
         return Sahifalar.objects.all().order_by('-create')

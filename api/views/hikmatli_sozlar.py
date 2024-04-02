@@ -3,6 +3,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
+from api.pagination import ResultsSetPagination
 from hikmatli_sozlar.models import Hikmatli_sozlar
 from hikmatli_sozlar.serializers import Hikmatli_sozlarSerializer
 
@@ -14,6 +15,7 @@ class Hikmatli_sozlarListView(ListAPIView):
     search_fields = ['text']
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     serializer_class = Hikmatli_sozlarSerializer
+    pagination_class = ResultsSetPagination
     filterset_fields = ['jadid__id', ]
 
     def get_queryset(self):

@@ -2,6 +2,7 @@ import random
 
 from rest_framework.generics import ListAPIView
 from django.shortcuts import get_object_or_404
+from api.pagination import ResultsSetPagination
 from jadidlar.models import Jadid
 from jadidlar.serializers import JadidSerializer
 from rest_framework.decorators import api_view
@@ -13,6 +14,7 @@ class JadidlarListView(ListAPIView):
     search_fields = ['fullname',]
     filter_backends = (filters.SearchFilter,)
     serializer_class = JadidSerializer
+    pagination_class = ResultsSetPagination
 
     def get_queryset(self):
         return Jadid.objects.all().order_by('order')

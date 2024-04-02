@@ -2,6 +2,7 @@ from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
+from api.pagination import ResultsSetPagination
 from tadbirlar.models import Kanferensiyalar, Seminarlar, Yangiliklar
 from tadbirlar.serializers import KanferensiyalarSerializer, SeminarlarSerializer, YangiliklarSerializer, \
     YangiliklarLikeSerializer, SeminarlarLikeSerializer, KanferensiyalarLikeSerializer
@@ -14,6 +15,7 @@ class KanferensiyalarListView(ListAPIView):
     search_fields = ['title', 'text']
     filter_backends = (filters.SearchFilter,)
     serializer_class = KanferensiyalarSerializer
+    pagination_class = ResultsSetPagination
 
     def get_queryset(self):
         return Kanferensiyalar.objects.all().order_by('-created_at')
@@ -59,6 +61,7 @@ class SeminarlarListView(ListAPIView):
     search_fields = ['title', 'text']
     filter_backends = (filters.SearchFilter,)
     serializer_class = SeminarlarSerializer
+    pagination_class = ResultsSetPagination
 
     def get_queryset(self):
         return Seminarlar.objects.all().order_by('-created_at')
@@ -104,6 +107,7 @@ class YangiliklarListView(ListAPIView):
     search_fields = ['title', 'text']
     filter_backends = (filters.SearchFilter,)
     serializer_class = YangiliklarSerializer
+    pagination_class = ResultsSetPagination
 
     def get_queryset(self):
         return Yangiliklar.objects.all().order_by('-created_at')
