@@ -3,7 +3,6 @@ from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
-from api.pagination import ResultsSetPagination
 from hujjatlar.models import Asarlar, Maqolalar, Tadqiqotlar, Sherlar, Hotiralar, Arxiv_hujjatlar, \
     Dissertatsiya
 from hujjatlar.serializers import AsarlarSerializer, MaqolalarSerializer, TadqiqotlarSerializer, SherlarSerializer, \
@@ -20,10 +19,8 @@ from rest_framework import filters, status
 
 class AsarlarListView(ListAPIView):
     search_fields = ['title']
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     serializer_class = AsarlarSerializer
-    pagination_class = ResultsSetPagination
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['jadid__id', "turkiston_muxtoriyati", "til_va_imlo", "tadqiqotlar"]
 
     def get(self, request, *args, **kwargs):
@@ -90,10 +87,8 @@ class AsarlarLikeAPIView(RetrieveUpdateAPIView):
 
 class MaqolalarListView(ListAPIView):
     search_fields = ['title']
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     serializer_class = MaqolalarSerializer
-    pagination_class = ResultsSetPagination
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['jadid__id', "turkiston_muxtoriyati", "til_va_imlo", "tadqiqotlar", "type",]
 
     def get(self, request, *args, **kwargs):
@@ -167,10 +162,8 @@ class MaqolalarLikeAPIView(RetrieveUpdateAPIView):
 
 class TadqiqotlarListView(ListAPIView):
     search_fields = ['title']
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     serializer_class = TadqiqotlarSerializer
-    pagination_class = ResultsSetPagination
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['jadid__id', ]
 
     @swagger_auto_schema(
@@ -198,10 +191,8 @@ def tadqiqotlardetail(request, pk):
 
 class SherlarListView(ListAPIView):
     search_fields = ['title']
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     serializer_class = SherlarSerializer
-    pagination_class = ResultsSetPagination
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['jadid__id', ]
 
     @swagger_auto_schema(
@@ -263,10 +254,8 @@ class SherlarLikeAPIView(RetrieveUpdateAPIView):
 
 class HotiralarListView(ListAPIView):
     search_fields = ['title']
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     serializer_class = HotiralarSerializer
-    pagination_class = ResultsSetPagination
-    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['jadid__id', ]
 
     @swagger_auto_schema(
@@ -337,7 +326,6 @@ class Arxiv_hujjatlarListView(ListAPIView):
     search_fields = ['title']
     filter_backends = (filters.SearchFilter,)
     serializer_class = Arxiv_hujjatlarSerializer
-    pagination_class = ResultsSetPagination
 
     @swagger_auto_schema(
         manual_parameters=[
@@ -400,7 +388,6 @@ class DissertatsiyaListView(ListAPIView):
     search_fields = ['title']
     filter_backends = (filters.SearchFilter,)
     serializer_class = DissertatsiyaSerializer
-    pagination_class = ResultsSetPagination
 
     def get_queryset(self):
         return Dissertatsiya.objects.all().order_by('-create')

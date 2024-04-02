@@ -2,7 +2,6 @@ from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
-from api.pagination import ResultsSetPagination
 from manbalar.models import Audiolar, Videolar, Rasmlar
 from manbalar.serializers import AudiolarSerializer, VideolarSerializer, RasmlarSerializer, AudiolarLikeSerializer, \
     RasmlarLikeSerializer
@@ -15,7 +14,6 @@ class AudiolarListView(ListAPIView):
     search_fields = ['title']
     filter_backends = (filters.SearchFilter,)
     serializer_class = AudiolarSerializer
-    pagination_class = ResultsSetPagination
 
     def get_queryset(self):
         return Audiolar.objects.all().order_by('-create')
@@ -59,7 +57,6 @@ class VideolarListView(ListAPIView):
     search_fields = ['title']
     filter_backends = (filters.SearchFilter,)
     serializer_class = VideolarSerializer
-    pagination_class = ResultsSetPagination
 
     def get_queryset(self):
         return Videolar.objects.all().order_by('-create')
@@ -76,7 +73,6 @@ class RasmlarListView(ListAPIView):
     search_fields = ['title']
     filter_backends = (filters.SearchFilter,)
     serializer_class = RasmlarSerializer
-    pagination_class = ResultsSetPagination
 
     def get_queryset(self):
         return Rasmlar.objects.all().order_by('-create')
