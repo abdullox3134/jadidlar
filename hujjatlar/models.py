@@ -73,9 +73,10 @@ class Maqolalar(models.Model):
     )
     type = models.CharField(max_length=30, choices=TYPE_CHOICE, verbose_name='matbuotlar', blank=True, null=True)
     likes = models.IntegerField(default=0, blank=True, null=True)
-    users = models.ManyToManyField(User, related_name='liked_maqolalar', blank=True, null=True)
+    users = models.ManyToManyField(User, related_name='liked_maqolalar')
+
     def __str__(self):
-        return self.title
+        return self.title or ''
 
     class Meta:
         verbose_name = 'Maqola'
