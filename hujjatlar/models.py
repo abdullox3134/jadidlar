@@ -42,10 +42,10 @@ class Maqolalar(models.Model):
     title = models.CharField(max_length=255, verbose_name='nomi', blank=True, null=True)
     jadid = models.ForeignKey(Jadid, on_delete=models.CASCADE,  related_name='maqolalar', blank=True, null=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
-    file = models.FileField(upload_to='files/maqolalar', verbose_name='fayl')
+    file = models.FileField(upload_to='files/maqolalar', verbose_name='fayl', blank=True, null=True)
     count = models.BigIntegerField(null=True, blank=True, default=0)
-    create = models.DateTimeField(auto_now_add=True, verbose_name='yaratilgan sana')
-    update = models.DateTimeField(auto_now=True, verbose_name='o`zgartirilgan sana')
+    create = models.DateTimeField(auto_now_add=True, verbose_name='yaratilgan sana', blank=True, null=True)
+    update = models.DateTimeField(auto_now=True, verbose_name='o`zgartirilgan sana', blank=True, null=True)
     turkiston_muxtoriyati = models.BooleanField(default=False, verbose_name='Turkiston muxtoriyati')
     tadqiqotlar = models.BooleanField(default=False, verbose_name='Tadqiqotlar')
     til_va_imlo = models.BooleanField(default=False, verbose_name='Til va imlo')
@@ -72,8 +72,8 @@ class Maqolalar(models.Model):
         (Bibliografik_korsatkich, 'Bibliografik korsatkich'),
     )
     type = models.CharField(max_length=30, choices=TYPE_CHOICE, verbose_name='matbuotlar', blank=True, null=True)
-    likes = models.IntegerField(default=0)
-    users = models.ManyToManyField(User, related_name='liked_maqolalar', blank=True)
+    likes = models.IntegerField(default=0, blank=True, null=True)
+    users = models.ManyToManyField(User, related_name='liked_maqolalar', blank=True, null=True)
     def __str__(self):
         return self.title
 
