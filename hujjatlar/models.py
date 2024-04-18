@@ -169,13 +169,13 @@ class Hotiralar(models.Model):
     count = models.BigIntegerField(null=True, blank=True, default=0)
     create = models.DateTimeField(auto_now_add=True, verbose_name='yaratilgan sana')
     update = models.DateTimeField(auto_now=True, verbose_name='o`zgartirilgan sana')
-    Turkiston_muxtoriyati = 'Turkiston muxtoriyati'
+    Turkiston_muxtoriyati = 'Turkiston_muxtoriyati'
     Tadqiqotlar = 'Tadqiqotlar'
-    Til_va_imlo = 'Til va imlo'
+    # Til_va_imlo = 'Til va imlo'
     TYPE_CHOICE = (
-        (Turkiston_muxtoriyati, 'Turkiston muxtoriyati'),
+        (Turkiston_muxtoriyati, 'Turkiston_muxtoriyati'),
         (Tadqiqotlar, 'Tadqiqotlar'),
-        (Til_va_imlo, 'Til va imlo'),
+        # (Til_va_imlo, 'Til_va_imlo'),
     )
     type = models.CharField(max_length=25, choices=TYPE_CHOICE, verbose_name='turi', default=Turkiston_muxtoriyati, blank=True, null=True)
     likes = models.IntegerField(default=0)
