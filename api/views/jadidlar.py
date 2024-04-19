@@ -28,7 +28,6 @@ def get_random_jadid(request):
     return Response(serializer.data)
 
 
-
 @api_view(['GET'])
 def jadidlardetail(request, pk):
     jadidlar = get_object_or_404(Jadid, pk=pk)

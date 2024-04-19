@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.utils.html import format_html
+
 from hujjatlar.models import Asarlar, Maqolalar, Tadqiqotlar, Sherlar, Hotiralar, Arxiv_hujjatlar, \
     Dissertatsiya, AsarlarFile, MaqolalarFile, TadqiqotlarFile, SherlarFile, HotiralarFile, Arxiv_hujjatlarFile, \
     DissertatsiyaFile
@@ -74,10 +76,14 @@ class Arxiv_hujjatlarFileInline(admin.TabularInline):
 
 @admin.register(Arxiv_hujjatlar)
 class Arxiv_hujjatlarAdmin(admin.ModelAdmin):
-    list_display = ('title', 'type',)
+    list_display = ('formatted_title', 'type',)
     inlines = [Arxiv_hujjatlarFileInline]
     fields = ('title_uz', 'title_ru', 'title_en', 'image', 'file', 'type', 'count',)
     readonly_fields = ('count',)
+
+    def formatted_title(self, obj):
+        return format_html(obj.title)
+    formatted_title.short_description = 'Nomi'
 
 
 class DissertatsiyaFileInline(admin.TabularInline):

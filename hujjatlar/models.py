@@ -99,13 +99,13 @@ class Tadqiqotlar(models.Model):
     count = models.BigIntegerField(null=True, blank=True, default=0)
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
-    Turkiston_muxtoriyati = 'Turkiston muxtoriyati'
+    Turkiston_muxtoriyati = 'Turkiston_muxtoriyati'
     Tadqiqotlar = 'Tadqiqotlar'
-    Til_va_imlo = 'Til va imlo'
+    Til_va_imlo = 'Til_va_imlo'
     TYPE_CHOICE = (
-        (Turkiston_muxtoriyati, 'Turkiston muxtoriyati'),
+        (Turkiston_muxtoriyati, 'Turkiston_muxtoriyati'),
         (Tadqiqotlar, 'Tadqiqotlar'),
-        (Til_va_imlo, 'Til va imlo'),
+        (Til_va_imlo, 'Til_va_imlo'),
     )
     type = models.CharField(max_length=25, choices=TYPE_CHOICE, verbose_name='turi', default=Turkiston_muxtoriyati, blank=True, null=True)
 
@@ -133,13 +133,13 @@ class Sherlar(models.Model):
     count = models.BigIntegerField(null=True, blank=True, default=0)
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
-    Turkiston_muxtoriyati = 'Turkiston muxtoriyati'
-    Tadqiqotlar = 'Tadqiqotlar'
-    Til_va_imlo = 'Til va imlo'
+    Turkiston_muxtoriyati = 'Turkiston_muxtoriyati'
+    # Tadqiqotlar = 'Tadqiqotlar'
+    # Til_va_imlo = 'Til va imlo'
     TYPE_CHOICE = (
-        (Turkiston_muxtoriyati, 'Turkiston muxtoriyati'),
-        (Tadqiqotlar, 'Tadqiqotlar'),
-        (Til_va_imlo, 'Til va imlo'),
+        (Turkiston_muxtoriyati, 'Turkiston_muxtoriyati'),
+        # (Tadqiqotlar, 'Tadqiqotlar'),
+        # (Til_va_imlo, 'Til va imlo'),
     )
     type = models.CharField(max_length=25, choices=TYPE_CHOICE, verbose_name='turi', default=Turkiston_muxtoriyati, blank=True, null=True)
     likes = models.IntegerField(default=0)
@@ -220,13 +220,14 @@ class Arxiv_hujjatlar(models.Model):
         (SKANER, 'SKANER'),
     )
 
-    title = models.CharField(max_length=255, verbose_name='nomi', blank=True, null=True)
+    title = RichTextField(verbose_name='nomi', blank=True, null=True)
     type = models.CharField(max_length=6, choices=TYPE_CHOICE, verbose_name='turi', default=ARXIV, blank=True, null=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     file = models.FileField(upload_to='files/arxiv_hujjatlar', verbose_name='fayl')
     count = models.BigIntegerField(null=True, blank=True, default=0)
     likes = models.IntegerField(default=0)
     users = models.ManyToManyField(User, related_name='liked_arxiv_hujjatlar', blank=True)
+
     def __str__(self):
         return self.title
 
@@ -238,7 +239,6 @@ class Arxiv_hujjatlar(models.Model):
 class Arxiv_hujjatlarFile(models.Model):
     arxiv_hujjatlar = models.ForeignKey(Arxiv_hujjatlar, on_delete=models.CASCADE, related_name='files')
     file = models.FileField(upload_to='files/arxiv_hujjatlar')
-
 
     def __str__(self):
         return self.file.url
