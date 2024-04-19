@@ -220,14 +220,13 @@ class Arxiv_hujjatlar(models.Model):
         (SKANER, 'SKANER'),
     )
 
-    title = RichTextField(verbose_name='nomi', blank=True, null=True)
+    title = models.TextField(verbose_name='nomi', blank=True, null=True)
     type = models.CharField(max_length=6, choices=TYPE_CHOICE, verbose_name='turi', default=ARXIV, blank=True, null=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     file = models.FileField(upload_to='files/arxiv_hujjatlar', verbose_name='fayl')
     count = models.BigIntegerField(null=True, blank=True, default=0)
     likes = models.IntegerField(default=0)
     users = models.ManyToManyField(User, related_name='liked_arxiv_hujjatlar', blank=True)
-
     def __str__(self):
         return self.title
 
@@ -239,6 +238,7 @@ class Arxiv_hujjatlar(models.Model):
 class Arxiv_hujjatlarFile(models.Model):
     arxiv_hujjatlar = models.ForeignKey(Arxiv_hujjatlar, on_delete=models.CASCADE, related_name='files')
     file = models.FileField(upload_to='files/arxiv_hujjatlar')
+
 
     def __str__(self):
         return self.file.url
