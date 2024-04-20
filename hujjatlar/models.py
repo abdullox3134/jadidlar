@@ -53,23 +53,23 @@ class Maqolalar(models.Model):
     Tarix = 'Tarix'
     Siyosat = 'Siyosat'
     Iqtisod = 'Iqtisod'
-    Madaniyat_va_sanat = 'Madaniyat va sanat'
-    Ijtimoiy_masalalar_va_din = 'Ijtimoiy masalalar va din'
+    Madaniyat_va_sanat = 'Madaniyat_va_sanat'
+    Ijtimoiy_masalalar_va_din = 'Ijtimoiy_masalalar_va_din'
     Adabiyot = 'Adabiyot'
-    Talim_Tarbiya = 'Talim - Tarbiya'
-    Boshqa_masalalar = 'Boshqa masalalar'
-    Bibliografik_korsatkich = 'Bibliografik korsatkich'
+    Talim_Tarbiya = 'Talim_Tarbiya'
+    Boshqa_masalalar = 'Boshqa_masalalar'
+    Bibliografik_korsatkich = 'Bibliografik_korsatkich'
 
     TYPE_CHOICE = (
         (Tarix, 'Tarix'),
         (Siyosat, 'Siyosat'),
         (Iqtisod, 'Iqtisod'),
-        (Madaniyat_va_sanat, 'Madaniyat va sanat'),
-        (Ijtimoiy_masalalar_va_din, 'Ijtimoiy masalalar va din'),
+        (Madaniyat_va_sanat, 'Madaniyat_va_sanat'),
+        (Ijtimoiy_masalalar_va_din, 'Ijtimoiy_masalalar_va_din'),
         (Adabiyot, 'Adabiyot'),
-        (Talim_Tarbiya, 'Talim - Tarbiya'),
-        (Boshqa_masalalar, 'Boshqa masalalar'),
-        (Bibliografik_korsatkich, 'Bibliografik korsatkich'),
+        (Talim_Tarbiya, 'Talim_Tarbiya'),
+        (Boshqa_masalalar, 'Boshqa_masalalar'),
+        (Bibliografik_korsatkich, 'Bibliografik_korsatkich'),
     )
     type = models.CharField(max_length=30, choices=TYPE_CHOICE, verbose_name='matbuotlar', blank=True, null=True)
     likes = models.IntegerField(default=0, blank=True, null=True)
