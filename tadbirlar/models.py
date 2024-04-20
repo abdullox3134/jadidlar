@@ -6,7 +6,7 @@ User = get_user_model()
 
 
 class Kanferensiyalar(models.Model):
-    title = models.CharField(max_length=200, verbose_name='nomi', blank=True, null=True)
+    title = models.TextField(verbose_name='nomi', blank=True, null=True)
     text = RichTextField(blank=True, null=True)
     image = models.ImageField(upload_to='image')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -40,7 +40,7 @@ class KanferensiyalarImage(models.Model):
 
 
 class Seminarlar(models.Model):
-    title = models.CharField(max_length=200, verbose_name='nomi', blank=True, null=True)
+    title = models.TextField(verbose_name='nomi', blank=True, null=True)
     text = RichTextField(blank=True, null=True)
     image = models.ImageField(upload_to='image')
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
@@ -73,7 +73,7 @@ class SeminarlarImage(models.Model):
 
 
 class Yangiliklar(models.Model):
-    title = models.CharField(max_length=200, verbose_name='nomi', blank=True, null=True)
+    title = models.TextField(verbose_name='nomi', blank=True, null=True)
     text = RichTextField(blank=True, null=True)
     image = models.ImageField(upload_to='image')
     created_at = models.DateTimeField(auto_now_add=True)

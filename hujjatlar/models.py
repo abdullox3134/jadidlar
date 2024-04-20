@@ -9,7 +9,7 @@ User = get_user_model()
 
 
 class Asarlar(models.Model):
-    title = models.CharField(max_length=255, verbose_name='nomi', blank=True, null=True)
+    title = models.TextField(verbose_name='nomi', blank=True, null=True)
     jadid = models.ForeignKey(Jadid, on_delete=models.CASCADE, related_name='asarlar', null=True, blank=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     file = models.FileField(upload_to='files/', null=True, blank=True)
@@ -39,7 +39,7 @@ class AsarlarFile(models.Model):
 
 
 class Maqolalar(models.Model):
-    title = models.CharField(max_length=255, verbose_name='nomi', blank=True, null=True)
+    title = models.TextField(verbose_name='nomi', blank=True, null=True)
     jadid = models.ForeignKey(Jadid, on_delete=models.CASCADE,  related_name='maqolalar', blank=True, null=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     file = models.FileField(upload_to='files/maqolalar', verbose_name='fayl', blank=True, null=True)
