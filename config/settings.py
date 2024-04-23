@@ -272,3 +272,10 @@ JAZZMIN_UI_TWEAKS = {
 AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_REDIRECT_URL = '/admin/'
+
+
+ALGORITHM = 'HS256'
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
+
+GOOGLE_CLIENT_ID = "38893290549-9iq6ar51b879ive8siqlh5artdosrdtk.apps.googleusercontent.com"
+GOOGLE_SECRET_KEY = "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"

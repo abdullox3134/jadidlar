@@ -34,6 +34,7 @@ urlpatterns = [
     path('api/', include('api.urls')),
 
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('google/', include('oauth.urls')),
 
 ]
 
