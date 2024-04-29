@@ -50,7 +50,7 @@ class SeminarlarLikeSerializer(serializers.ModelSerializer):
 class YangiliklarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Yangiliklar
-        fields = ('id', 'title', 'text', 'image', 'created_at', 'updated_at', 'blog_views', 'likes',)
+        fields = ('id', 'title', 'text', 'image', 'link', 'created_at', 'updated_at', 'blog_views', 'likes',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

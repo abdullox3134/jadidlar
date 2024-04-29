@@ -127,7 +127,7 @@ class YangiliklarImageInline(admin.TabularInline):
 class YangiliklarAdmin(admin.ModelAdmin):
     inlines = [YangiliklarImageInline]
     list_display = ('title', 'display_admin_photo', 'created_at', 'updated_at',)
-    fields = ('title_uz', 'title_ru', 'title_en', 'text_uz', 'text_ru', 'text_en', 'image',)
+    fields = ('title_uz', 'title_ru', 'title_en', 'text_uz', 'text_ru', 'text_en', 'link', 'image',)
     list_display_links = ('title',)
     search_fields = ('title',)
     list_filter = ('title',)

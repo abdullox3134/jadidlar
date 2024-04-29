@@ -76,6 +76,7 @@ class Yangiliklar(models.Model):
     title = models.TextField(verbose_name='nomi', blank=True, null=True)
     text = RichTextField(blank=True, null=True)
     image = models.ImageField(upload_to='image')
+    link = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     likes = models.IntegerField(default=0)
