@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from api.views.down import FileDownMaqolaView, FileDownAsarView, FileDownTadqiqotView, FileDownSherView, \
     FileDownHotiraView, FileDownArxiv_hujjatView, FileDownDissertatsiyaView, FileDownSahifaView
@@ -33,6 +33,7 @@ urlpatterns = [
     path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('register/', RegisterView.as_view(), name='auth_register'),
+    path("google/", include("authentication.urls")),
 
     path('foydali_havolalar/', Foydali_havolalarListView.as_view(), name='foydali_havolalar-list'),
     path('foydali_havolalar/<int:pk>/', foydali_havolalardetail, name='foydali_havolalar-detail'),
