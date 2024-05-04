@@ -46,6 +46,18 @@ class CustomUser(AbstractUser):
     # bmi = models.FloatField(_('bmi'), blank=True, null=True)
     image = models.ImageField(upload_to='users/', blank=True, null=True)
 
+    # new
+    REGISTRATION_CHOICES = [
+        ('email', 'Email'),
+        ('google', 'Google'),
+    ]
+    registration_method = models.CharField(
+        max_length=10,
+        choices=REGISTRATION_CHOICES,
+        default='email'
+    )
+    # new
+    
     USERNAME_FIELD = 'phone'
     objects = UserManager()
 

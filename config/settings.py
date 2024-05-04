@@ -60,7 +60,9 @@ INSTALLED_APPS = [
     'slayder',
     'tadbirlar',
     'tanlovlar',
-    'users'
+    'users',
+    "authentication",
+
 ]
 
 REST_FRAMEWORK = {
@@ -270,6 +272,8 @@ JAZZMIN_UI_TWEAKS = {
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'
+# AUTH_USER_MODEL = 'authentication.User'
+
 
 LOGIN_REDIRECT_URL = '/admin/'
 
@@ -277,5 +281,9 @@ LOGIN_REDIRECT_URL = '/admin/'
 ALGORITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 
-GOOGLE_CLIENT_ID = "38893290549-9iq6ar51b879ive8siqlh5artdosrdtk.apps.googleusercontent.com"
-GOOGLE_SECRET_KEY = "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"
+
+...
+# Google OAuth2 settings
+BASE_FRONTEND_URL = os.environ.get('DJANGO_BASE_FRONTEND_URL', default='http://127.0.0.1:8000/')
+GOOGLE_OAUTH2_CLIENT_ID = os.environ.get('GOOGLE_OAUTH2_CLIENT_ID')
+GOOGLE_OAUTH2_CLIENT_SECRET = os.environ.get('GOOGLE_OAUTH2_CLIENT_SECRET')
