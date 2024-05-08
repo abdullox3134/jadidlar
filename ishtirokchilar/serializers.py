@@ -5,12 +5,11 @@ from ishtirokchilar.models import Ishtirokchilar
 class IshtirokchilarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ishtirokchilar
-        fields = ('id', 'fullname', 'position', 'image',)
+        fields = ('id', 'fullname', 'position', 'image', 'order',)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
         images = instance.ishtirokchi_images.all()
-        print(images)
 
         if images:
             request = self.context.get('request')

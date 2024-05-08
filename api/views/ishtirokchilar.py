@@ -17,7 +17,7 @@ class IshtirokchilarListView(ListAPIView):
     pagination_class = ResultsSetPagination
 
     def get_queryset(self):
-        return Ishtirokchilar.objects.all()
+        return Ishtirokchilar.objects.all().order_by('order')
 
 
 @api_view(['GET'])

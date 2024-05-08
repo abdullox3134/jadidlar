@@ -21,7 +21,7 @@ class IshtirokchilarImageInline(admin.TabularInline):
 @admin.register(Ishtirokchilar)
 class IshtirokchilarAdmin(admin.ModelAdmin):
     inlines = [IshtirokchilarImageInline]
-    list_display = ('fullname', 'display_admin_photo',)
+    list_display = ('fullname', 'display_admin_photo', 'order',)
     fields = ('fullname_uz', 'fullname_ru', 'fullname_en', 'position_uz', 'position_ru', 'position_en', 'image',
               'order',)
     list_display_links = ('fullname',)
