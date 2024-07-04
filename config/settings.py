@@ -91,6 +91,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CSRF_TRUSTED_ORIGINS = ['https://new.jadidlar.uz']
+
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -109,6 +111,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
@@ -120,10 +123,11 @@ DATABASES = {
         'NAME': 'jadid_db',
         'USER': 'jadidlar_user',
         'PASSWORD': 'jadidlar_password',
-        'HOST': 'localhost',
+        'HOST': '172.16.16.4',
         'PORT': '5432',
     }
 }
+
 
 # DATABASES = {
 #     'default': {
