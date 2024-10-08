@@ -91,7 +91,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://subdomain.jadidlarimiz.uz']
+CSRF_TRUSTED_ORIGINS = ['https://subdomain.jadidlar.uz']
 
 ROOT_URLCONF = 'config.urls'
 
@@ -199,6 +199,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'language-code',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    'https://subdomain.jadidlar.uz',
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 JAZZMIN_SETTINGS = {
     "site_title": "Foydali Havolalar",
